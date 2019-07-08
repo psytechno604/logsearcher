@@ -167,13 +167,10 @@ bool CLogReader::GetNextLine(char *buf, const int bufsize) {
 					if (bufOffset < bufsize && bufOffset + offset - startOffset <= bufsize-1 && offset > startOffset) {
 						memcpy(buf + bufOffset, ptrInFile + startOffset, offset - startOffset);
 						bufOffset += offset - startOffset;
-					} else if (offset > startOffset) {
-
-					}
-
+					} 
 				}
 				startOffset = offset;
-				while(*(ptrInFile + offset)!='\r' && *(ptrInFile + offset)!='\n') {
+				while(ptrInFile && *(ptrInFile + offset)!='\r' && *(ptrInFile + offset)!='\n') {
 					offset++;
 					if(offset == blockSize-1) {
 						if (ptrInFile && bufOffset < bufsize && bufOffset + offset - startOffset <= bufsize-1 && offset > startOffset) {
@@ -210,6 +207,11 @@ bool CLogReader::SetFilter(const char *filter) {
 	if(!filter || strlen(filter)<=0) {
 		return false;
 	}
+	/*for (int i = 0; i < strlen(filter); i++) {
+		if (filter[i] == '\n' || filter[i] == '\r') {
+			return false; //or will not work as expected
+		}
+	}*/
 	this->filter = filter;
 	return true;	
 }

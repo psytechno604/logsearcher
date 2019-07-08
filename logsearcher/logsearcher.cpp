@@ -19,36 +19,37 @@ int main(int argc, char* argv[])
 
 	
 
-	reader.Open(argv[1]);
-	reader.SetFilter(argv[2]);
+	if (reader.Open(argv[1])) {
+		reader.SetFilter(argv[2]);
 
-	bool fullOutput = false;
-	for(int i=3; i<argc; i++) {
-		if(!strcmp(argv[i], "-f")) {
-			fullOutput = true;
+		bool fullOutput = false;
+		for (int i = 3; i < argc; i++) {
+			if (!strcmp(argv[i], "-f")) {
+				fullOutput = true;
+			}
 		}
-	}
 
-	int bufsize = BUF_SIZE;
-	for(int i=3; i<argc; i++) {
-		if(!strcmp(argv[i], "-b") && i<argc-1) {
-			bufsize = atoi(argv[i+1]);
+		int bufsize = BUF_SIZE;
+		for (int i = 3; i < argc; i++) {
+			if (!strcmp(argv[i], "-b") && i < argc - 1) {
+				bufsize = atoi(argv[i + 1]);
+			}
 		}
-	}
-	char *buf = new char[bufsize];
-	
-	int numFound = 0;
+		char* buf = new char[bufsize];
+
+		int numFound = 0;
 		while (reader.GetNextLine(buf, bufsize)) {
 			numFound++;
-			if(fullOutput) {
+			if (fullOutput) {
 				print_line();
 			}
 		}
-	printf("Found %d from total of %d lines\n", numFound, reader.LineNumber());
+		printf("Found %d from total of %d lines\n", numFound, reader.LineNumber());
 
-	reader.Close();
+		reader.Close();
 
-	delete[] buf;
+		delete[] buf;
+	}
 	return 0;
 }
 
