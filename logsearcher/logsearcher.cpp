@@ -12,7 +12,7 @@
 int main(int argc, char* argv[])
 {
 	if (argc < 3) {
-		printf("Usage: logsearcher.exe <filename> <mask> [options]\n-f           - full output,\n-b <bufsize> - set buffer size (default=%d).\n", BUF_SIZE);
+		printf("Usage: logsearcher.exe filename mask [options]\n-f           - full output,\n-b <bufsize> - set buffer size (default=%d).\n", BUF_SIZE);
 		return 0;
 	}
 	CLogReader reader;
