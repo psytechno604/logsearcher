@@ -207,11 +207,11 @@ bool CLogReader::SetFilter(const char *filter) {
 	if(!filter || strlen(filter)<=0) {
 		return false;
 	}
-	/*for (int i = 0; i < strlen(filter); i++) {
+	for (int i = 0; i < strlen(filter); i++) {
 		if (filter[i] == '\n' || filter[i] == '\r') {
 			return false; //or will not work as expected
 		}
-	}*/
+	}
 	this->filter = filter;
 	return true;	
 }
@@ -221,6 +221,9 @@ char *CLogReader::newPtr() {
 }
 char *CLogReader::newPtr(bool needCopy) {
 	
+	if (!ptrInFile) {
+		return NULL;
+	}
 	
 	if (needCopy 
 		&& buf 
